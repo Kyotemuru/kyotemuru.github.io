@@ -1,0 +1,322 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bellota:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Comic+Relief:wght@400;700&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/d373e59d6e.js" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.nav_link');
+    const sections = document.querySelectorAll('div[id], footer[id]');
+
+    const options = {
+        root: null,
+        // Смещаем зону срабатывания: -20% сверху и -70% снизу. 
+        // Это создает узкую "активную полосу" в верхней части экрана.
+        rootMargin: '-20% 0px -70% 0px', 
+        threshold: 0 
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    // Проверяем, совпадает ли href ссылки с id блока
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, options);
+
+    sections.forEach(section => observer.observe(section));
+
+    // Фикс для самого верха: если скролл в нуле, подсвечиваем Home
+    window.addEventListener('scroll', () => {
+        if (window.scrollY < 10) {
+            navLinks.forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.nav_link[href="#home"]')?.classList.add('active');
+        }
+    });
+
+    const burger = document.getElementById('burger_trigger');
+    const nav = document.getElementById('nav_menu');
+
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            nav.classList.toggle('open');
+        });
+
+        // Закрываем меню при клике на любую ссылку
+        document.querySelectorAll('.nav_link').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                nav.classList.remove('open');
+            });
+        });
+});
+    </script>
+
+
+
+    </head>
+    <body>
+
+        <header>
+            <div class="header_logoname">
+                <img class='header_logo' src="MAIN/Logo.png" alt="">
+                <div class="header_name">Lazy coffee</div>
+            </div>
+                        
+            <div class="burger_menu" id="burger_trigger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="nav" id="nav_menu">
+                <a class="nav_link" href="#home">Home</a>
+                <a class="nav_link" href="#menu">Menu</a>
+                <a class="nav_link" href="#footer">Contact</a>
+            </div>
+        </header>
+
+        <div class="MAIN" id="home"> <!-- MAIN -->
+
+
+            <div class="main_text">
+                <div class="first-main_text">We Have Been Serving</div>
+                <div class="second-main_text">COFFEE</div>
+                <div class="third-main_text">*since 1950*</div>
+                <div class="button_animation">
+                    <a class="main_button" href="#menu">Make An Order<i class="fa-solid fa-cart-shopping"></i></a>
+                </div>
+            </div>
+        </div> <!-- /MAIN -->
+
+        <div class="MENU" id="menu"> <!-- MENU -->
+            <div class="buy_menu">
+
+                <div class="card">
+                    <div class="photo-container">
+                        <img class="photo" src="MENU/cup1.png" alt="">
+                        <div class="structure">100% Arabica, full-bodied, with hints of dark chocolate and a nutty aftertaste.</div>
+                    </div>
+                    <div class="card_text">
+                        <div class="product_name">Espresso</div>
+                        <div class="buy_block">
+                            <div class="product_price">109₽</div>
+                            <a class="buy_button" href="#">Add to cart</a>
+                        </div>
+                    </div>    
+                </div>
+
+                <div class="card">
+                    <div class="photo-container">
+                        <img class="photo" src="MENU/cup2.png" alt="">
+                        <div class="structure">A double shot of espresso made from freshly roasted beans and soft filtered water.</div>
+                    </div>
+                    <div class="card_text">
+                        <div class="product_name">Americano</div>
+                        <div class="buy_block">
+                            <div class="product_price">149₽</div>
+                            <a class="buy_button" href="#">Add to cart</a>
+                        </div>
+                    </div>    
+                </div>
+
+                <div class="card">
+                    <div class="photo-container">
+                        <img class="photo" src="MENU/cup3.png" alt="">
+                        <div class="structure">A delicate espresso, lots of whipped milk, and a thin layer of creamy foam.</div>
+                    </div>
+                    <div class="card_text">
+                        <div class="product_name">Latte</div>
+                        <div class="buy_block">
+                            <div class="product_price">199₽</div>
+                            <a class="buy_button" href="#">Add to cart</a>
+                        </div>
+                    </div>    
+                </div>
+
+                <div class="card">
+                    <div class="photo-container">
+                        <img class="photo" src="MENU/cup4.png" alt="">
+                        <div class="structure">Classic balance: strong espresso and thick milk foam.</div>
+                    </div>
+                    <div class="card_text">
+                        <div class="product_name">Cappuccino</div>
+                        <div class="buy_block">
+                            <div class="product_price">199₽</div>
+                            <a class="buy_button" href="#">Add to cart</a>
+                        </div>
+                    </div>    
+                </div>
+
+                <div class="card">
+                    <div class="photo-container">
+                        <img class="photo" src="MENU/dessert1.png" alt="">
+                        <div class="structure">Cream pudding, natural vanilla, caramel syrup, and a slice of dried orange.</div>
+                    </div>
+                    <div class="card_text">
+                        <div class="product_name">Panna cotta</div>
+                        <div class="buy_block">
+                            <div class="product_price">205₽</div>
+                            <a class="buy_button" href="#">Add to cart</a>
+                        </div>
+                    </div>    
+                </div>
+
+                <div class="card">
+                    <div class="photo-container">
+                        <img class="photo" src="MENU/dessert2.png" alt="">
+                        <div class="structure">Baking soda, propitka from espresso, cream on the basis of mascarpone and cocoa powder.</div>
+                    </div>
+                    <div class="card_text">
+                        <div class="product_name">Tiramisu</div>
+                        <div class="buy_block">
+                            <div class="product_price">205₽</div>
+                            <a class="buy_button" href="#">Add to cart</a>
+                        </div>
+                    </div>    
+                </div>
+
+                <div class="card">
+                    <div class="photo-container">
+                        <img class="photo" src="MENU/dessert3.png" alt="">
+                        <div class="structure">Rich chocolate biscuits, delicate ganache, and Belgian chocolate shavings.</div>
+                    </div>
+                    <div class="card_text">
+                        <div class="product_name">Chocolate cake</div>
+                        <div class="buy_block">
+                            <div class="product_price">205₽</div>
+                            <a class="buy_button" href="#">Add to cart</a>
+                        </div>
+                    </div>    
+                </div>
+
+                <div class="card">
+                    <div class="photo-container">
+                        <img class="photo" src="MENU/dessert4.png" alt="">
+                        <div class="structure">A shortbread base, a light cream cheese, and a homemade wild raspberry sauce.</div>
+                    </div>
+                    <div class="card_text">
+                        <div class="product_name">Cheesecake</div>
+                        <div class="buy_block">
+                            <div class="product_price">205₽</div>
+                            <a class="buy_button" href="#">Add to cart</a>
+                        </div>
+                    </div>    
+                </div>
+
+
+            </div>
+        </div> <!-- /MENU -->
+
+        <footer id="footer">
+            <div class="main-footer_blocks">
+                <div class="main-footer_text">
+                    <div class="text_block">
+                        <div class="footer_name">Lazy coffee</div>
+                        <div class="footer_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </div>
+                        <div class="followers"><b>15k </b>followers</div>
+                    </div>
+                    <div class="follow_block">
+                        <div class="follow">
+                            Follow Us:
+                            <a class="brand" href="#" target="_blank">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                                <a class="brand" href="#" target="_blank">
+                                <i class="fa-brands fa-x-twitter"></i>
+                            </a>
+                                <a class="brand" href="#" target="_blank">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                                <a class="brand" href="#" target="_blank">
+                                <i class="fa-brands fa-pinterest-p"></i>
+                            </a>
+                                <a class="brand" href="#" target="_blank">
+                                <i class="fa-brands fa-square-google-plus"></i>
+                            </a>
+                                <a class="brand" href="#" target="_blank">
+                                <i class="fa-brands fa-youtube"></i>
+                            </a>
+                                <a class="brand" href="#" target="_blank">
+                                <i class="fa-solid fa-baseball"></i>
+                            </a>
+                                <a class="brand" href="#" target="_blank">
+                                <i class="fa-brands fa-tumblr"></i>
+                            </a>
+                        </div>
+                        <form class="subscribe" action="#"  method="post">
+                            <input class="mail" type="email" name="name" placeholder=" Your Email...">
+                            <a href="https://www.youtube.com">
+                            <button class="mail_btn">Subscribe</button>
+                            </a>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="blogs">
+                    <div class="blogs_name">Blogs</div>
+
+
+                    <div class="footer_card">
+                        <img class="blogs_img" src="CONTACT/169/1.jpg" alt="">
+                        <div class="blogs_text">
+                            <div class="main-blogs_text">Lorem ipsum dolor sit amet, consectetur adipiscing</div>
+                            <div class="second-blogs_text">Jan 9, 2026</div>
+                        </div>
+                    </div>
+
+                    <div class="footer_card">
+                        <img class="blogs_img" src="CONTACT/169/2.jpg" alt="">
+                        <div class="blogs_text">
+                            <div class="main-blogs_text">Lorem ipsum dolor sit amet, consectetur adipiscing</div>
+                            <div class="second-blogs_text">Jan 9, 2026</div>
+                        </div>
+                    </div>
+
+                    <div class="footer_card">
+                        <img class="blogs_img" src="CONTACT/169/3.webp" alt="">
+                        <div class="blogs_text">
+                            <div class="main-blogs_text">Lorem ipsum dolor sit amet, consectetur adipiscing</div>
+                            <div class="second-blogs_text">Jan 9, 2026</div>
+                        </div>
+                    </div>
+                </div>
+            
+
+                 <div class="instagram">
+                        <div class="instagram_name">Instagram</div>
+                        <div class="instagram_img">
+                            <img class="inst_photo" src="CONTACT/11/1.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/2.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/3.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/4.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/5.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/6.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/7.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/8.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/9.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/10.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/11.jpg" alt="">
+                            <img class="inst_photo" src="CONTACT/11/12.jpg" alt="">
+                        </div>
+                        <a href="#" class="inst_text">View more photos</a>
+                </div>
+            </div>
+            <div class="copiright">© 2026 Lazy coffe</div>
+        </footer>
+
+
+    </body>
+</html>

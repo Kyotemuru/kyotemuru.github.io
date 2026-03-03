@@ -146,7 +146,8 @@ header {
     /* main_text */
 .main_text {
     animation: fadeInUp 1.2s ease-out forwards;
-
+    
+    text-align: center;
     display: flex;
     color: white;
     flex-direction: column;
@@ -773,6 +774,7 @@ footer {
     font-size: 20px;
 }
 }
+
 
 
 

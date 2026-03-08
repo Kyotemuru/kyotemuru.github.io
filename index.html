@@ -61,6 +61,96 @@
                 nav.classList.remove('open');
             });
         });
+
+    
+const cartBtn = document.getElementById('cart_btn');
+const cartOverlay = document.getElementById('cart_overlay');
+const closeCart = document.getElementById('close_cart');
+const cartItemsContainer = document.getElementById('cart_items');
+const totalPriceEl = document.getElementById('total_price');
+const cartCountEl = document.getElementById('cart_count');
+
+let cart = [];
+
+// Открытие/Закрытие
+cartBtn.addEventListener('click', () => cartOverlay.classList.add('open'));
+closeCart.addEventListener('click', () => cartOverlay.classList.remove('open'));
+
+// Добавление товара
+document.querySelectorAll('.buy_button').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // БАГ-ФИКС: Если кнопка уже в состоянии "Added", игнорируем клик
+        if (button.innerText === "Added! ✓") return;
+        
+        const card = button.closest('.card');
+        const name = card.querySelector('.product_name').innerText;
+        const price = parseInt(card.querySelector('.product_price').innerText);
+        
+        const existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({ name, price, quantity: 1 });
+        }
+        
+        // Визуальный отклик
+        const originalText = button.innerHTML; // Используем innerHTML, чтобы сохранить иконки, если они есть
+        button.innerText = "Added! ✓";
+        button.style.backgroundColor = "#2ecc71";
+        button.style.borderColor = "#2ecc71";
+        button.classList.add('btn-success'); // Можно добавить класс для смены цвета в CSS
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.style.backgroundColor = "";
+            button.style.borderColor = "";
+        }, 1500);
+        
+        updateCart();
+    });
+});
+
+
+function updateCart() {
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
+    let count = 0;
+    
+    cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+        count += item.quantity;
+        
+        const itemEl = document.createElement('div');
+        itemEl.className = 'cart_item';
+        itemEl.innerHTML = `
+            <div class="cart_item_info">
+                <div class="cart_item_name"><b>${item.name}</b></div>
+                <div class="cart_item_details">${item.price}₽ x ${item.quantity} = <b>${item.price * item.quantity}₽</b></div>
+            </div>
+            <button class="remove_item" onclick="removeFromCart(${index})">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+        `;
+        cartItemsContainer.appendChild(itemEl);
+    });
+    
+    totalPriceEl.innerText = `${total}₽`;
+    cartCountEl.innerText = count;
+}
+
+// Новая функция для удаления
+window.removeFromCart = function(index) {
+    // Уменьшаем количество или удаляем совсем
+    if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+    } else {
+        cart.splice(index, 1);
+    }
+    updateCart();
+};
 });
     </script>
 
@@ -74,7 +164,7 @@
                 <img class='header_logo' src="MAIN/Logo.png" alt="">
                 <div class="header_name">Lazy coffee</div>
             </div>
-                        
+
             <div class="burger_menu" id="burger_trigger">
                 <span></span>
                 <span></span>
@@ -86,7 +176,31 @@
                 <a class="nav_link" href="#menu">Menu</a>
                 <a class="nav_link" href="#footer">Contact</a>
             </div>
+
+            <a class="cart_icon" href="javascript:void(0)" id="cart_btn">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span id="cart_count">0</span>
+            </a>
+
         </header>
+
+             <!-- CART -->
+
+            <div class="cart_overlay" id="cart_overlay">
+                <div class="cart_window">
+                    <button class="close_cart" id="close_cart">&times;</button>
+                    <h2>Your Cart</h2>
+                    <div class="cart_items" id="cart_items">
+                        </div>
+                    <div class="cart_total">
+                        <span>Total:</span>
+                        <span id="total_price">0₽</span>
+                    </div>
+                    <button class="checkout_btn">Order Now</button>
+                </div>
+            </div>
+
+            <!-- /CART -->       
 
         <div class="MAIN" id="home"> <!-- MAIN -->
 

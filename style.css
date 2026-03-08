@@ -51,14 +51,17 @@ header {
     width: 100%;
     background: rgba(128, 128, 128, 0.1);
     backdrop-filter: blur(5px);
-
-    padding-top: 1%;
-    padding-bottom: 1%;
+    
+    /* Добавляем нормальные отступы по краям всего хедера */
+    padding: 10px 50px; 
+    box-sizing: border-box;
+    
     z-index: 1000;
     top: 0;
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
+    /* Теперь логотип слева, а ВСЁ остальное прижато вправо */
+    justify-content: flex-start; 
 }
 
 .header_logoname {
@@ -84,12 +87,12 @@ header {
 }
 
 .nav {
+    margin-left: auto;
     display: flex;
     justify-content: flex-end;
     font-weight: bold;
     font-size: 4vh;
     gap: 25px;
-    padding-right: 5%;
 }
 
 .nav_link {
@@ -141,6 +144,188 @@ header {
     animation: fadeInUp 0.7s ease-out 0.4s forwards;
 }
 
+
+/* Иконка корзины в навигации */
+
+.cart_icon {
+    margin-left: 3%;
+    text-decoration: none;
+    color: #fff;
+    font-size: 28px; /* Немного увеличил для баланса */
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    order: 3; /* Будет идти после навигации */
+}
+
+#cart_count {
+    background: #e39335; /* Оранжевый под стиль кофе */
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    font-family: 'Bellota', sans-serif;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Затемнение фона при открытии корзины */
+.cart_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none; /* Скрыто по умолчанию */
+    z-index: 2000;
+    backdrop-filter: blur(10px); /* Твой любимый эффект стекла */
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Класс для открытия через JS */
+.cart_overlay.open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Само окно корзины */
+.cart_window {
+    background: rgba(44, 24, 16, 0.95); /* Темно-кофейный фон */
+    color: #fff;
+    width: 90%;
+    max-width: 450px;
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(227, 147, 53, 0.4);
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    font-family: 'Bellota', sans-serif;
+}
+
+.cart_window h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #e39335;
+    padding-bottom: 10px;
+    font-size: 24px;
+    color: #e39335;
+}
+
+/* Кнопка закрытия (крестик) */
+.close_cart {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 32px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close_cart:hover {
+    color: #ff4747;
+}
+
+/* Список товаров */
+.cart_items {
+    max-height: 40vh; /* Ограничение по высоте */
+    overflow-y: auto;
+    margin-top: 15px;
+    padding-right: 10px;
+}
+
+/* Стилизация скроллбара внутри корзины */
+.cart_items::-webkit-scrollbar {
+    width: 4px;
+}
+.cart_items::-webkit-scrollbar-thumb {
+    background: #e39335;
+    border-radius: 10px;
+}
+
+/* Контейнер одного товара */
+.cart_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cart_item_info {
+    flex-grow: 1;
+}
+
+.cart_item_name {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.cart_item_details {
+    color: #ccc;
+    font-size: 14px;
+}
+
+/* Кнопка удаления (мусорка) */
+.remove_item {
+    background: rgba(255, 71, 71, 0.1);
+    border: 1px solid rgba(255, 71, 71, 0.3);
+    color: #ff4747;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: all 0.2s ease;
+}
+
+.remove_item:hover {
+    background: #ff4747;
+    color: white;
+}
+
+/* Итоговая сумма */
+.cart_total {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Кнопка оформления заказа */
+.checkout_btn {
+    width: 100%;
+    background: #e39335;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+
+.checkout_btn:hover {
+    background: #ffa047;
+    transform: translateY(-2px);
+}
+
+.checkout_btn:active {
+    transform: translateY(0);
+}
 
     /* /header */
 
@@ -709,9 +894,20 @@ footer {
         align-items: center;
     }
 
+    .header_logoname {
+        order: 1;
+    }
+
+    .cart_icon {
+        order: 2; /* Корзина вторая */
+        margin-left: auto; /* Прижимаем вправо к бургеру */
+        margin-right: 20px; /* Отступ от бургера */
+    }
+
     .burger_menu {
         display: flex;
         margin-right: 3%;
+        order: 3;
     }
 
 
@@ -722,11 +918,15 @@ footer {
         flex-direction: column;
         position: absolute;
         top: 100%;
+        left: 0;           /* 1. ОБЯЗАТЕЛЬНО: прижимаем к левому краю */
         width: 100%;
         background: rgba(146, 84, 47, 0.9);
         padding: 10px 0;
         box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         z-index: 1000;
+        
+        margin-left: 0;    /* 2. ИСПРАВЛЕНИЕ: убираем десктопный отступ */
+        padding-left: 0;   /* Сбрасываем внутренние отступы, если были */
     }
 
     
